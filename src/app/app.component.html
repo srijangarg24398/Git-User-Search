@@ -1,20 +1,49 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
-</div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://github.com/angular/angular-cli/wiki">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <span>Github Search</span>
+  </mat-toolbar-row>
+</mat-toolbar>
 
+
+<form class="example-form">
+  <mat-form-field class="example-full-width">
+    <input matInput placeholder="Username or Email" [formControl]="emailFormControl" [errorStateMatcher]="matcher" [(ngModel)]="value">
+    <button mat-button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
+      <mat-icon>cancel</mat-icon>
+    </button>
+    <!-- <mat-hint>Errors appear instantly!</mat-hint> -->
+    <!-- <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+      Please enter a valid email address
+    </mat-error> -->
+    <mat-error *ngIf="emailFormControl.hasError('required')">
+      Username or Email is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+  <button mat-raised-button color="primary" (click)="getUserInfo()">Search</button>
+</form>
+
+<mat-card class="example-card" *ngIf="userLoaded">
+  <mat-card-header>
+    <div mat-card-avatar class="example-header-image"></div>
+    <mat-card-title>{{user.login}}</mat-card-title>
+    <mat-card-subtitle><a [href]="user.html_url">User Profile</a></mat-card-subtitle>
+  </mat-card-header>
+  <img mat-card-image [src]="user.avatar_url" alt="Profile Picture">
+  <mat-card-content>
+    <p>
+      {{user.bio}}
+    </p>
+    <mat-card-title><a [href]="user.repos_url">{{user.public_repos}} Public Repos</a></mat-card-title>
+    <div>
+      <div>Joined {{user.created_at | date:"medium":'+0'}}</div>
+    </div>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-button>{{user.followers}} Followers</button>
+    <button mat-button>{{user.following}} Following</button>
+  </mat-card-actions>
+</mat-card>
+
+<mat-card class="example-card" *ngIf="notFound">
+  <img mat-card-image src="https://goodfriendlights.com/clients/goodfriendelectric/OopsNotFound.jpg" alt="Profile Picture">
+</mat-card>
